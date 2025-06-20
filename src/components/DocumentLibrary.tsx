@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Upload, FileText, Calendar, Eye, Download, X, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -50,7 +49,7 @@ const DocumentLibrary = ({ onDocumentSelect }) => {
   const [isDragOver, setIsDragOver] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [uploadProgress, setUploadProgress] = useState({});
+  const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({});
 
   const handleUpload = () => {
     setShowUploadModal(true);
@@ -253,7 +252,7 @@ const DocumentLibrary = ({ onDocumentSelect }) => {
                     </Button>
                     <Button 
                       className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                      disabled={Object.values(uploadProgress).some(progress => progress < 100)}
+                      disabled={Object.values(uploadProgress).some((progress: number) => progress < 100)}
                     >
                       Done
                     </Button>
