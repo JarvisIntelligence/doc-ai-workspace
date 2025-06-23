@@ -119,8 +119,8 @@ const DocumentLibrary = ({ onDocumentSelect }) => {
     <div className="space-y-6">
       {/* Upload Section */}
       <div 
-        className={`bg-white rounded-lg shadow-sm border-2 border-dashed p-8 transition-all ${
-          isDragOver ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
+        className={`bg-card rounded-lg border-2 border-dashed p-8 transition-all ${
+          isDragOver ? 'border-primary bg-primary/10' : 'border-border'
         }`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -128,14 +128,14 @@ const DocumentLibrary = ({ onDocumentSelect }) => {
       >
         <div className="text-center">
           <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors ${
-            isDragOver ? 'bg-blue-200' : 'bg-blue-100'
+            isDragOver ? 'bg-primary/20' : 'bg-primary/10'
           }`}>
             <Upload className={`w-8 h-8 transition-colors ${
-              isDragOver ? 'text-blue-700' : 'text-blue-600'
+              isDragOver ? 'text-primary' : 'text-primary'
             }`} />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Upload Documents</h3>
-          <p className="text-gray-600 mb-4">
+          <h3 className="text-lg font-semibold text-foreground mb-2">Upload Documents</h3>
+          <p className="text-muted-foreground mb-4">
             {isDragOver 
               ? 'Drop your files here!' 
               : 'Drop your PDF or DOCX files here, or click to browse'
@@ -151,24 +151,24 @@ const DocumentLibrary = ({ onDocumentSelect }) => {
           />
           <Button 
             onClick={() => document.getElementById('file-upload').click()}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+            className="bg-primary hover:bg-primary/90"
           >
             <Upload className="w-4 h-4 mr-2" />
             Choose Files
           </Button>
-          <p className="text-xs text-gray-500 mt-2">Supports PDF and DOCX files up to 10MB</p>
+          <p className="text-xs text-muted-foreground mt-2">Supports PDF and DOCX files up to 10MB</p>
         </div>
       </div>
 
       {/* Upload Modal */}
       {showUploadModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 max-h-[80vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-6 border-b">
-              <h3 className="text-lg font-semibold">Upload Files</h3>
+          <div className="bg-card rounded-lg shadow-xl max-w-md w-full mx-4 max-h-[80vh] overflow-y-auto border border-border">
+            <div className="flex items-center justify-between p-6 border-b border-border">
+              <h3 className="text-lg font-semibold text-foreground">Upload Files</h3>
               <button 
                 onClick={() => setShowUploadModal(false)}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-muted-foreground hover:text-foreground"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -177,8 +177,8 @@ const DocumentLibrary = ({ onDocumentSelect }) => {
             <div className="p-6">
               {selectedFiles.length === 0 ? (
                 <div className="text-center py-8">
-                  <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600">No files selected</p>
+                  <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-muted-foreground">No files selected</p>
                   <input
                     type="file"
                     multiple
@@ -198,13 +198,13 @@ const DocumentLibrary = ({ onDocumentSelect }) => {
               ) : (
                 <div className="space-y-4">
                   {selectedFiles.map((file) => (
-                    <div key={file.name} className="border rounded-lg p-4">
+                    <div key={file.name} className="border border-border rounded-lg p-4">
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center space-x-3">
-                          <FileText className="w-5 h-5 text-blue-600" />
+                          <FileText className="w-5 h-5 text-primary" />
                           <div>
-                            <p className="font-medium text-sm">{file.name}</p>
-                            <p className="text-xs text-gray-500">
+                            <p className="font-medium text-sm text-foreground">{file.name}</p>
+                            <p className="text-xs text-muted-foreground">
                               {(file.size / 1024 / 1024).toFixed(2)} MB
                             </p>
                           </div>
@@ -215,7 +215,7 @@ const DocumentLibrary = ({ onDocumentSelect }) => {
                           ) : (
                             <button
                               onClick={() => removeFile(file.name)}
-                              className="text-gray-400 hover:text-red-600"
+                              className="text-muted-foreground hover:text-red-600"
                             >
                               <X className="w-4 h-4" />
                             </button>
@@ -225,13 +225,13 @@ const DocumentLibrary = ({ onDocumentSelect }) => {
                       
                       {uploadProgress[file.name] !== undefined && (
                         <div className="space-y-2">
-                          <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div className="w-full bg-muted rounded-full h-2">
                             <div 
-                              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                              className="bg-primary h-2 rounded-full transition-all duration-300"
                               style={{ width: `${uploadProgress[file.name] || 0}%` }}
                             />
                           </div>
-                          <p className="text-xs text-gray-600">
+                          <p className="text-xs text-muted-foreground">
                             {uploadProgress[file.name] === 100 
                               ? 'Upload complete!' 
                               : `Uploading... ${Math.round(uploadProgress[file.name] || 0)}%`
@@ -251,7 +251,7 @@ const DocumentLibrary = ({ onDocumentSelect }) => {
                       Close
                     </Button>
                     <Button 
-                      className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                      className="flex-1 bg-primary hover:bg-primary/90"
                       disabled={Object.values(uploadProgress).some((progress: number) => progress < 100)}
                     >
                       Done
@@ -269,39 +269,39 @@ const DocumentLibrary = ({ onDocumentSelect }) => {
         {documents.map((doc) => (
           <div
             key={doc.id}
-            className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+            className="bg-card rounded-lg border border-border hover:border-primary/50 transition-all cursor-pointer"
             onClick={() => onDocumentSelect(doc)}
           >
             <div className="p-6">
               <div className="flex items-start justify-between mb-4">
                 <div className="text-3xl">{doc.thumbnail}</div>
-                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                <span className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded">
                   {doc.type}
                 </span>
               </div>
               
-              <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
+              <h3 className="font-semibold text-foreground mb-2 line-clamp-2">
                 {doc.title}
               </h3>
               
-              <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+              <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                 {doc.summary}
               </p>
               
-              <div className="flex items-center justify-between text-xs text-gray-500">
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
                 <span>{doc.pages} pages</span>
                 <span>{doc.size}</span>
               </div>
               
-              <div className="flex items-center mt-3 text-xs text-gray-500">
+              <div className="flex items-center mt-3 text-xs text-muted-foreground">
                 <Calendar className="w-3 h-3 mr-1" />
                 {new Date(doc.uploadDate).toLocaleDateString()}
               </div>
             </div>
             
-            <div className="border-t px-6 py-3 bg-gray-50 flex items-center justify-between">
-              <span className="text-sm text-gray-600">Click to open</span>
-              <Eye className="w-4 h-4 text-gray-400" />
+            <div className="border-t border-border px-6 py-3 bg-muted/50 flex items-center justify-between">
+              <span className="text-sm text-muted-foreground">Click to open</span>
+              <Eye className="w-4 h-4 text-muted-foreground" />
             </div>
           </div>
         ))}
