@@ -31,15 +31,12 @@ const Index = () => {
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center">
               <img 
                 src="/lovable-uploads/924735e3-573c-4a3b-8b87-c372967db007.png" 
                 alt="Jarvis Logo" 
-                className="w-10 h-10 object-contain"
+                className="h-8 w-auto object-contain"
               />
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Jarvis
-              </h1>
             </div>
             <CreditTracker credits={credits} />
           </div>
