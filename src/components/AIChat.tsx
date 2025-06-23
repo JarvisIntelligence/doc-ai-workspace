@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { MessageSquare, Send, Bot, User, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -64,7 +65,7 @@ const AIChat = ({ document, credits, onDeductCredits }) => {
   };
 
   return (
-    <div className="h-full flex flex-col bg-card">
+    <div className="h-full flex flex-col">
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message) => (
@@ -75,23 +76,23 @@ const AIChat = ({ document, credits, onDeductCredits }) => {
             <div className={`flex space-x-3 max-w-[80%] ${message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
               <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                 message.type === 'user' 
-                  ? 'bg-primary'
-                  : 'bg-primary'
+                  ? 'bg-blue-600' 
+                  : 'bg-gradient-to-r from-purple-600 to-pink-600'
               }`}>
                 {message.type === 'user' ? (
-                  <User className="w-4 h-4 text-primary-foreground" />
+                  <User className="w-4 h-4 text-white" />
                 ) : (
-                  <Bot className="w-4 h-4 text-primary-foreground" />
+                  <Bot className="w-4 h-4 text-white" />
                 )}
               </div>
               <div className={`rounded-lg p-3 ${
                 message.type === 'user'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-muted text-foreground'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 text-gray-900'
               }`}>
                 <p className="text-sm">{message.content}</p>
                 <p className={`text-xs mt-1 ${
-                  message.type === 'user' ? 'text-primary-foreground/70' : 'text-muted-foreground'
+                  message.type === 'user' ? 'text-blue-100' : 'text-gray-500'
                 }`}>
                   {message.timestamp.toLocaleTimeString()}
                 </p>
@@ -103,14 +104,14 @@ const AIChat = ({ document, credits, onDeductCredits }) => {
         {isTyping && (
           <div className="flex justify-start">
             <div className="flex space-x-3 max-w-[80%]">
-              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
-                <Bot className="w-4 h-4 text-primary-foreground" />
+              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center flex-shrink-0">
+                <Bot className="w-4 h-4 text-white" />
               </div>
-              <div className="bg-muted rounded-lg p-3">
+              <div className="bg-gray-100 rounded-lg p-3">
                 <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse"></div>
-                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
                 </div>
               </div>
             </div>
@@ -119,7 +120,7 @@ const AIChat = ({ document, credits, onDeductCredits }) => {
       </div>
 
       {/* Input */}
-      <div className="border-t border-border p-4">
+      <div className="border-t p-4">
         <div className="flex space-x-2">
           <Input
             value={inputMessage}
@@ -132,14 +133,14 @@ const AIChat = ({ document, credits, onDeductCredits }) => {
           <Button
             onClick={handleSendMessage}
             disabled={!inputMessage.trim() || isTyping || credits < 2}
-            className="bg-primary hover:bg-primary/90"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
           >
             <Send className="w-4 h-4" />
           </Button>
         </div>
-        <div className="flex items-center justify-between mt-2 text-xs text-muted-foreground">
+        <div className="flex items-center justify-between mt-2 text-xs text-gray-500">
           <span>2 credits per question</span>
-          {credits < 2 && <span className="text-destructive">Not enough credits</span>}
+          {credits < 2 && <span className="text-red-600">Not enough credits</span>}
         </div>
       </div>
     </div>
