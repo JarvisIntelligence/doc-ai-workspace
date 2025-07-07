@@ -9,7 +9,7 @@ const ContactsMessaging = () => {
   const [message, setMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const [contacts] = useState([
+  const [contacts, setContacts] = useState([
     {
       id: 1,
       name: "Sarah Chen",
@@ -73,6 +73,16 @@ const ContactsMessaging = () => {
     contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     contact.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleContactSelect = (contact) => {
+    // Clear unread count when opening a chat
+    setContacts(prevContacts => 
+      prevContacts.map(c => 
+        c.id === contact.id ? { ...c, unread: 0 } : c
+      )
+    );
+    setActiveContact(contact);
+  };
 
   const sendMessage = () => {
     if (!message.trim() || !activeContact) return;
@@ -148,7 +158,7 @@ const ContactsMessaging = () => {
             {filteredContacts.map((contact) => (
               <div
                 key={contact.id}
-                onClick={() => setActiveContact(contact)}
+                onClick={() => handleContactSelect(contact)}
                 className={`p-3 sm:p-4 border-b cursor-pointer hover:bg-gray-50 transition-colors ${
                   activeContact?.id === contact.id ? 'bg-blue-50 border-blue-200' : ''
                 }`}
@@ -167,9 +177,9 @@ const ContactsMessaging = () => {
                     <div className="flex items-center justify-between">
                       <p className="text-xs sm:text-sm font-medium text-gray-900 truncate">{contact.name}</p>
                       {contact.unread > 0 && (
-                        <span className="bg-blue-600 text-white text-xs rounded-full px-2 py-1 min-w-[20px] text-center">
+                        <div className="w-5 h-5 sm:w-6 sm:h-6 bg-blue-500 text-white text-xs rounded-full flex items-center justify-center font-medium min-w-[20px] sm:min-w-[24px]">
                           {contact.unread}
-                        </span>
+                        </div>
                       )}
                     </div>
                     <p className="text-xs text-gray-600 truncate">{contact.lastMessage}</p>
