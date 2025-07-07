@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { Users, MessageSquare, Plus, Send, Search, Share2 } from 'lucide-react';
+import { Users, MessageSquare, Plus, Send, Search, Share2, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
