@@ -1,10 +1,12 @@
 
 import React, { useState } from 'react';
-import { Upload, FileText, MessageSquare, Users, Brain, Zap, BookOpen } from 'lucide-react';
+import { Upload, FileText, MessageSquare, Users, Brain, Zap, BookOpen, Settings, CreditCard } from 'lucide-react';
 import DocumentLibrary from '../components/DocumentLibrary';
 import DocumentViewer from '../components/DocumentViewer';
 import ContactsMessaging from '../components/ContactsMessaging';
 import CreditTracker from '../components/CreditTracker';
+import BuyCredits from '../components/BuyCredits';
+import ProfileSettings from '../components/ProfileSettings';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('documents');
@@ -13,6 +15,10 @@ const Index = () => {
 
   const deductCredits = (amount) => {
     setCredits(prev => Math.max(0, prev - amount));
+  };
+
+  const addCredits = (amount) => {
+    setCredits(prev => prev + amount);
   };
 
   const handleDocumentSelect = (doc) => {
@@ -38,7 +44,22 @@ const Index = () => {
                 className="h-8 w-auto object-contain"
               />
             </div>
-            <CreditTracker credits={credits} />
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setActiveTab('buy-credits')}
+                className="flex items-center space-x-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+              >
+                <CreditCard className="w-4 h-4" />
+                <span>Buy Credits</span>
+              </button>
+              <CreditTracker credits={credits} />
+              <button
+                onClick={() => setActiveTab('profile')}
+                className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <Settings className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -88,6 +109,16 @@ const Index = () => {
         )}
         {activeTab === 'contacts' && (
           <ContactsMessaging />
+        )}
+        {activeTab === 'buy-credits' && (
+          <BuyCredits 
+            currentCredits={credits} 
+            onCreditsAdded={addCredits}
+            onBack={() => setActiveTab('documents')}
+          />
+        )}
+        {activeTab === 'profile' && (
+          <ProfileSettings onBack={() => setActiveTab('documents')} />
         )}
       </main>
     </div>
