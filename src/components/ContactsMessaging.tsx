@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Users, MessageSquare, Plus, Send, Search, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -117,144 +116,157 @@ const ContactsMessaging = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border overflow-hidden h-[600px] flex">
-      {/* Contacts Sidebar */}
-      <div className="w-1/3 border-r flex flex-col">
-        {/* Header */}
-        <div className="p-4 border-b bg-gray-50">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="font-semibold text-gray-900">Contacts</h2>
-            <Button size="sm" variant="outline">
-              <Plus className="w-4 h-4 mr-1" />
-              Add
-            </Button>
+    <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
+      <div className="flex flex-col lg:flex-row h-[500px] sm:h-[600px]">
+        {/* Contacts Sidebar */}
+        <div className={`w-full lg:w-1/3 border-b lg:border-b-0 lg:border-r flex flex-col ${
+          activeContact ? 'hidden lg:flex' : 'flex'
+        }`}>
+          {/* Header */}
+          <div className="p-3 sm:p-4 border-b bg-gray-50">
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="font-semibold text-gray-900 text-sm sm:text-base">Contacts</h2>
+              <Button size="sm" variant="outline" className="text-xs sm:text-sm">
+                <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                Add
+              </Button>
+            </div>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-3 h-3 sm:w-4 sm:h-4" />
+              <Input
+                placeholder="Search contacts..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-8 sm:pl-9 text-xs sm:text-sm"
+              />
+            </div>
           </div>
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <Input
-              placeholder="Search contacts..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-9"
-            />
+
+          {/* Contacts List */}
+          <div className="flex-1 overflow-y-auto">
+            {filteredContacts.map((contact) => (
+              <div
+                key={contact.id}
+                onClick={() => setActiveContact(contact)}
+                className={`p-3 sm:p-4 border-b cursor-pointer hover:bg-gray-50 transition-colors ${
+                  activeContact?.id === contact.id ? 'bg-blue-50 border-blue-200' : ''
+                }`}
+              >
+                <div className="flex items-center space-x-2 sm:space-x-3">
+                  <div className="relative">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-200 flex items-center justify-center text-sm sm:text-lg">
+                      {contact.avatar}
+                    </div>
+                    <div className={`absolute bottom-0 right-0 w-2 h-2 sm:w-3 sm:h-3 rounded-full border-2 border-white ${
+                      contact.status === 'online' ? 'bg-green-400' :
+                      contact.status === 'away' ? 'bg-yellow-400' : 'bg-gray-400'
+                    }`}></div>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs sm:text-sm font-medium text-gray-900 truncate">{contact.name}</p>
+                      {contact.unread > 0 && (
+                        <span className="bg-blue-600 text-white text-xs rounded-full px-2 py-1 min-w-[20px] text-center">
+                          {contact.unread}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-gray-600 truncate">{contact.lastMessage}</p>
+                    <p className="text-xs text-gray-400">{contact.lastActive}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Contacts List */}
-        <div className="flex-1 overflow-y-auto">
-          {filteredContacts.map((contact) => (
-            <div
-              key={contact.id}
-              onClick={() => setActiveContact(contact)}
-              className={`p-4 border-b cursor-pointer hover:bg-gray-50 transition-colors ${
-                activeContact?.id === contact.id ? 'bg-blue-50 border-blue-200' : ''
-              }`}
-            >
-              <div className="flex items-center space-x-3">
-                <div className="relative">
-                  <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-lg">
-                    {contact.avatar}
-                  </div>
-                  <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${
-                    contact.status === 'online' ? 'bg-green-400' :
-                    contact.status === 'away' ? 'bg-yellow-400' : 'bg-gray-400'
-                  }`}></div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm font-medium text-gray-900 truncate">{contact.name}</p>
-                    {contact.unread > 0 && (
-                      <span className="bg-blue-600 text-white text-xs rounded-full px-2 py-1 min-w-[20px] text-center">
-                        {contact.unread}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs text-gray-600 truncate">{contact.lastMessage}</p>
-                  <p className="text-xs text-gray-400">{contact.lastActive}</p>
-                </div>
+        {/* Chat Area */}
+        <div className={`flex-1 flex flex-col ${
+          !activeContact ? 'hidden lg:flex' : 'flex'
+        }`}>
+          {!activeContact ? (
+            <div className="flex-1 flex items-center justify-center bg-gray-50">
+              <div className="text-center px-4">
+                <MessageSquare className="w-8 h-8 sm:w-12 sm:h-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">Select a Contact</h3>
+                <p className="text-sm sm:text-base text-gray-600">Choose a contact to start messaging</p>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Chat Area */}
-      <div className="flex-1 flex flex-col">
-        {!activeContact ? (
-          <div className="flex-1 flex items-center justify-center bg-gray-50">
-            <div className="text-center">
-              <MessageSquare className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Select a Contact</h3>
-              <p className="text-gray-600">Choose a contact to start messaging</p>
-            </div>
-          </div>
-        ) : (
-          <>
-            {/* Chat Header */}
-            <div className="p-4 border-b bg-gray-50">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                    {activeContact.avatar}
+          ) : (
+            <>
+              {/* Chat Header */}
+              <div className="p-3 sm:p-4 border-b bg-gray-50">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2 sm:space-x-3">
+                    <button
+                      onClick={() => setActiveContact(null)}
+                      className="lg:hidden p-1 text-gray-500 hover:text-gray-700"
+                    >
+                      <ArrowLeft className="w-4 h-4" />
+                    </button>
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gray-200 flex items-center justify-center text-sm">
+                      {activeContact.avatar}
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900 text-sm sm:text-base">{activeContact.name}</h3>
+                      <p className="text-xs sm:text-sm text-gray-600 capitalize">{activeContact.status}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-medium text-gray-900">{activeContact.name}</h3>
-                    <p className="text-sm text-gray-600 capitalize">{activeContact.status}</p>
-                  </div>
+                  <Button size="sm" variant="outline" onClick={shareDocument} className="text-xs sm:text-sm">
+                    <Share2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                    <span className="hidden sm:inline">Share Doc</span>
+                    <span className="sm:hidden">Share</span>
+                  </Button>
                 </div>
-                <Button size="sm" variant="outline" onClick={shareDocument}>
-                  <Share2 className="w-4 h-4 mr-1" />
-                  Share Doc
-                </Button>
               </div>
-            </div>
 
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {(conversations[activeContact.id] || []).map((msg) => (
-                <div
-                  key={msg.id}
-                  className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div className={`max-w-[70%] rounded-lg p-3 ${
-                    msg.sender === 'me'
-                      ? msg.isShared 
-                        ? 'bg-green-600 text-white'
-                        : 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-900'
-                  }`}>
-                    <p className="text-sm">{msg.content}</p>
-                    <p className={`text-xs mt-1 ${
-                      msg.sender === 'me' ? 'text-blue-100' : 'text-gray-500'
+              {/* Messages */}
+              <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
+                {(conversations[activeContact.id] || []).map((msg) => (
+                  <div
+                    key={msg.id}
+                    className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}
+                  >
+                    <div className={`max-w-[85%] sm:max-w-[70%] rounded-lg p-2 sm:p-3 ${
+                      msg.sender === 'me'
+                        ? msg.isShared 
+                          ? 'bg-green-600 text-white'
+                          : 'bg-blue-600 text-white'
+                        : 'bg-gray-100 text-gray-900'
                     }`}>
-                      {msg.timestamp}
-                    </p>
+                      <p className="text-xs sm:text-sm">{msg.content}</p>
+                      <p className={`text-xs mt-1 ${
+                        msg.sender === 'me' ? 'text-blue-100' : 'text-gray-500'
+                      }`}>
+                        {msg.timestamp}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Message Input */}
-            <div className="p-4 border-t">
-              <div className="flex space-x-2">
-                <Input
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Type a message..."
-                  className="flex-1"
-                />
-                <Button
-                  onClick={sendMessage}
-                  disabled={!message.trim()}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                >
-                  <Send className="w-4 h-4" />
-                </Button>
+                ))}
               </div>
-            </div>
-          </>
-        )}
+
+              {/* Message Input */}
+              <div className="p-3 sm:p-4 border-t">
+                <div className="flex space-x-2">
+                  <Input
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder="Type a message..."
+                    className="flex-1 text-xs sm:text-sm"
+                  />
+                  <Button
+                    onClick={sendMessage}
+                    disabled={!message.trim()}
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-3 sm:px-4"
+                  >
+                    <Send className="w-3 h-3 sm:w-4 sm:h-4" />
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -10,9 +10,9 @@ const CreditTracker = ({ credits }) => {
   };
 
   return (
-    <div className={`flex items-center space-x-2 px-3 py-2 rounded-full ${getColorClass()}`}>
-      <Zap className="w-4 h-4" />
-      <span className="font-medium">{credits} credits</span>
+    <div className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1 sm:py-2 rounded-full ${getColorClass()}`}>
+      <Zap className="w-3 h-3 sm:w-4 sm:h-4" />
+      <span className="font-medium text-xs sm:text-sm">{credits} credits</span>
     </div>
   );
 };
