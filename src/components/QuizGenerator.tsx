@@ -144,25 +144,26 @@ const QuizGenerator = ({ document, credits, onDeductCredits }) => {
 
   if (!quiz && !isGenerating) {
     return (
-      <div className="h-full flex items-center justify-center p-6">
-        <div className="text-center max-w-md">
-          <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <HelpCircle className="w-8 h-8 text-purple-600" />
+      <div className="h-full flex items-center justify-center p-4 sm:p-6">
+        <div className="text-center max-w-md px-4">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <HelpCircle className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Generate AI Quiz</h3>
-          <p className="text-gray-600 mb-6">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">Generate AI Quiz</h3>
+          <p className="text-sm sm:text-base text-gray-600 mb-6">
             Create an interactive quiz with multiple choice and short answer questions based on your document.
           </p>
           <Button 
             onClick={generateQuiz}
             disabled={credits < 8}
-            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-sm sm:text-base"
+            size="sm"
           >
-            <Zap className="w-4 h-4 mr-2" />
+            <Zap className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
             Generate Quiz (8 credits)
           </Button>
           {credits < 8 && (
-            <p className="text-red-600 text-sm mt-2">Not enough credits</p>
+            <p className="text-red-600 text-xs sm:text-sm mt-2">Not enough credits</p>
           )}
         </div>
       </div>
@@ -171,16 +172,16 @@ const QuizGenerator = ({ document, credits, onDeductCredits }) => {
 
   if (isGenerating) {
     return (
-      <div className="h-full flex items-center justify-center p-6">
-        <div className="text-center max-w-md">
-          <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <HelpCircle className="w-8 h-8 text-purple-600 animate-pulse" />
+      <div className="h-full flex items-center justify-center p-4 sm:p-6">
+        <div className="text-center max-w-md px-4">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <HelpCircle className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600 animate-pulse" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Generating Quiz...</h3>
-          <p className="text-gray-600 mb-4">AI is creating questions from your document</p>
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">Generating Quiz...</h3>
+          <p className="text-sm sm:text-base text-gray-600 mb-4">AI is creating questions from your document</p>
           <div className="w-full max-w-xs mx-auto">
             <Progress value={progress} className="mb-2" />
-            <p className="text-sm text-gray-500">{progress}% complete</p>
+            <p className="text-xs sm:text-sm text-gray-500">{progress}% complete</p>
           </div>
         </div>
       </div>
@@ -190,19 +191,19 @@ const QuizGenerator = ({ document, credits, onDeductCredits }) => {
   if (showResults) {
     const score = calculateScore();
     return (
-      <div className="h-full overflow-y-auto p-6">
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Award className="w-8 h-8 text-green-600" />
+      <div className="h-full overflow-y-auto p-4 sm:p-6">
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Award className="w-6 h-6 sm:w-8 sm:h-8 text-green-600" />
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">Quiz Complete!</h3>
-          <p className="text-lg text-gray-600">Your Score: <span className="font-bold text-green-600">{score}%</span></p>
+          <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Quiz Complete!</h3>
+          <p className="text-base sm:text-lg text-gray-600">Your Score: <span className="font-bold text-green-600">{score}%</span></p>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {quiz.questions.map((question, index) => (
-            <div key={question.id} className="border rounded-lg p-4">
-              <h4 className="font-semibold text-gray-900 mb-3">
+            <div key={question.id} className="border rounded-lg p-3 sm:p-4">
+              <h4 className="font-semibold text-gray-900 mb-3 text-sm sm:text-base">
                 Question {index + 1}: {question.question}
               </h4>
               
@@ -258,29 +259,29 @@ const QuizGenerator = ({ document, credits, onDeductCredits }) => {
   const currentQ = quiz.questions[currentQuestion];
 
   return (
-    <div className="h-full flex flex-col p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-gray-900">
+    <div className="h-full flex flex-col p-4 sm:p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-2">
+        <h3 className="text-base sm:text-lg font-semibold text-gray-900">
           Question {currentQuestion + 1} of {quiz.questions.length}
         </h3>
-        <div className="text-sm text-gray-600">
+        <div className="text-xs sm:text-sm text-gray-600">
           {Object.keys(answers).length}/{quiz.questions.length} answered
         </div>
       </div>
 
-      <div className="flex-1 space-y-6">
-        <div className="bg-white border rounded-lg p-6">
-          <h4 className="text-lg font-medium text-gray-900 mb-4">
+      <div className="flex-1 space-y-4 sm:space-y-6">
+        <div className="bg-white border rounded-lg p-4 sm:p-6">
+          <h4 className="text-base sm:text-lg font-medium text-gray-900 mb-4">
             {currentQ.question}
           </h4>
 
           {currentQ.type === 'multiple-choice' && (
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3">
               {currentQ.options.map((option, index) => (
                 <button
                   key={index}
                   onClick={() => handleAnswerSelect(currentQ.id, index)}
-                  className={`w-full text-left p-3 rounded-lg border transition-colors ${
+                  className={`w-full text-left p-2 sm:p-3 rounded-lg border transition-colors text-sm sm:text-base ${
                     answers[currentQ.id] === index
                       ? 'bg-blue-50 border-blue-300 text-blue-900'
                       : 'bg-gray-50 hover:bg-gray-100 border-gray-200'
@@ -297,17 +298,19 @@ const QuizGenerator = ({ document, credits, onDeductCredits }) => {
               value={answers[currentQ.id] || ''}
               onChange={(e) => handleTextAnswer(currentQ.id, e.target.value)}
               placeholder="Type your answer here..."
-              className="w-full h-32 p-3 border rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full h-24 sm:h-32 p-2 sm:p-3 border rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
             />
           )}
         </div>
       </div>
 
-      <div className="flex items-center justify-between pt-6 border-t">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 sm:justify-between pt-4 sm:pt-6 border-t">
         <Button
           variant="outline"
           onClick={() => setCurrentQuestion(Math.max(0, currentQuestion - 1))}
           disabled={currentQuestion === 0}
+          size="sm"
+          className="text-sm"
         >
           Previous
         </Button>
@@ -316,13 +319,16 @@ const QuizGenerator = ({ document, credits, onDeductCredits }) => {
           <Button
             onClick={submitQuiz}
             disabled={Object.keys(answers).length < quiz.questions.length}
-            className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700"
+            className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-sm"
+            size="sm"
           >
             Submit Quiz
           </Button>
         ) : (
           <Button
             onClick={() => setCurrentQuestion(Math.min(quiz.questions.length - 1, currentQuestion + 1))}
+            size="sm"
+            className="text-sm"
           >
             Next
           </Button>
