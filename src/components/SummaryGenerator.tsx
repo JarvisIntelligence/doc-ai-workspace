@@ -81,27 +81,28 @@ ${summary.sections.map(section => `${section.title}: ${section.summary}`).join('
   };
 
   return (
-    <div className="h-full flex flex-col p-3 sm:p-4 lg:p-6">
+    <div className="h-full flex flex-col p-2 sm:p-3 lg:p-6">
       {!summary && !isGenerating && (
         <div className="flex-1 flex items-center justify-center">
-          <div className="text-center max-w-sm px-4">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Brain className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
+          <div className="text-center max-w-xs sm:max-w-sm px-2 sm:px-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <Brain className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-blue-600" />
             </div>
-            <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">Generate AI Summary</h3>
-            <p className="text-sm sm:text-base text-gray-600 mb-6">
-              Get a comprehensive summary of your document with key points, takeaways, and section breakdowns.
+            <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-900 mb-2">Generate AI Summary</h3>
+            <p className="text-xs sm:text-sm lg:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed">
+              Get a comprehensive summary with key points and takeaways.
             </p>
             <Button 
               onClick={generateSummary}
               disabled={credits < 5}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-xs sm:text-sm"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-xs sm:text-sm w-full sm:w-auto"
+              size="sm"
             >
-              <Zap className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+              <Zap className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
               Generate Summary (5 credits)
             </Button>
             {credits < 5 && (
-              <p className="text-red-600 text-xs sm:text-sm mt-2">Not enough credits</p>
+              <p className="text-red-600 text-xs mt-2">Not enough credits</p>
             )}
           </div>
         </div>
@@ -109,29 +110,29 @@ ${summary.sections.map(section => `${section.title}: ${section.summary}`).join('
 
       {isGenerating && (
         <div className="flex-1 flex items-center justify-center">
-          <div className="text-center max-w-sm px-4">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Brain className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600 animate-pulse" />
+          <div className="text-center max-w-xs sm:max-w-sm px-2 sm:px-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <Brain className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-blue-600 animate-pulse" />
             </div>
-            <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">Generating Summary...</h3>
-            <p className="text-sm sm:text-base text-gray-600 mb-4">AI is analyzing your document</p>
-            <div className="w-full max-w-xs mx-auto">
-              <Progress value={progress} className="mb-2" />
-              <p className="text-xs sm:text-sm text-gray-500">{progress}% complete</p>
+            <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-900 mb-2">Generating Summary...</h3>
+            <p className="text-xs sm:text-sm lg:text-base text-gray-600 mb-3 sm:mb-4">AI is analyzing your document</p>
+            <div className="w-full max-w-48 sm:max-w-xs mx-auto">
+              <Progress value={progress} className="mb-2 h-2" />
+              <p className="text-xs text-gray-500">{progress}% complete</p>
             </div>
           </div>
         </div>
       )}
 
       {summary && (
-        <div className="flex-1 overflow-y-auto space-y-4 sm:space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex-1 overflow-y-auto space-y-3 sm:space-y-4 lg:space-y-6">
+          <div className="flex flex-col xs:flex-row xs:items-center justify-between gap-2 sm:gap-3">
             <div className="flex items-center space-x-2">
-              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
-              <h3 className="text-base sm:text-lg font-semibold text-gray-900">Summary Generated</h3>
+              <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
+              <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-900">Summary Generated</h3>
             </div>
-            <Button variant="outline" size="sm" onClick={copySummary} className="text-xs sm:text-sm">
-              <Copy className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+            <Button variant="outline" size="sm" onClick={copySummary} className="text-xs w-full xs:w-auto">
+              <Copy className="w-3 h-3 mr-1 sm:mr-2" />
               Copy
             </Button>
           </div>
