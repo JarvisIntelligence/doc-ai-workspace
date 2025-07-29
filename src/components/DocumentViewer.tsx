@@ -8,7 +8,7 @@ import SummaryGenerator from './SummaryGenerator';
 import QuizGenerator from './QuizGenerator';
 
 const DocumentViewer = ({ document, onBack, credits, onDeductCredits }) => {
-  const [activeTab, setActiveTab] = useState('summary');
+  const [activeTab, setActiveTab] = useState('preview');
   const [isGenerating, setIsGenerating] = useState(false);
 
   return (
@@ -42,39 +42,23 @@ const DocumentViewer = ({ document, onBack, credits, onDeductCredits }) => {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row min-h-[calc(100vh-180px)] sm:min-h-[calc(100vh-220px)] lg:min-h-[calc(100vh-280px)] max-h-[calc(100vh-180px)] sm:max-h-[calc(100vh-220px)] lg:max-h-[calc(100vh-280px)]">
-        {/* Document Preview */}
-        <div className="w-full lg:w-1/2 border-b lg:border-b-0 lg:border-r bg-gray-50 p-2 sm:p-3 lg:p-6 overflow-y-auto h-64 sm:h-80 lg:h-full">
-          <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4 lg:p-8 h-full">
-            <div className="text-center mb-4 sm:mb-6">
-              <FileText className="w-8 h-8 sm:w-12 sm:h-12 lg:w-16 lg:h-16 text-gray-400 mx-auto mb-2 sm:mb-4" />
-              <h3 className="text-sm sm:text-base lg:text-lg font-medium text-gray-900 mb-1 sm:mb-2">Document Preview</h3>
-              <p className="text-xs sm:text-sm text-gray-600">Preview of {document.title}</p>
-            </div>
-            
-            {/* Mock document content */}
-            <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-gray-700 leading-relaxed overflow-y-auto">
-              <h2 className="text-sm sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3">{document.title}</h2>
-              <p className="hidden sm:block">This is a preview of the document content. In the actual implementation, this would display the real PDF or DOCX content using a document viewer library.</p>
-              <p className="sm:hidden">Document preview would appear here in a real implementation.</p>
-              <div className="bg-blue-50 p-2 sm:p-3 rounded-lg mt-2 sm:mt-4">
-                <h3 className="font-semibold text-blue-900 mb-1 sm:mb-2 text-xs sm:text-sm">Available Features:</h3>
-                <ul className="list-disc list-inside text-blue-800 space-y-0.5 sm:space-y-1 text-xs">
-                  <li>AI summaries</li>
-                  <li>Quiz generation</li>
-                  <li>Q&A chat</li>
-                  <li className="hidden sm:list-item">Document sharing</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
+      <div className="flex flex-col min-h-[calc(100vh-180px)] sm:min-h-[calc(100vh-220px)] lg:min-h-[calc(100vh-280px)] max-h-[calc(100vh-180px)] sm:max-h-[calc(100vh-220px)] lg:max-h-[calc(100vh-280px)]">
         {/* AI Tools Panel */}
-        <div className="w-full lg:w-1/2 flex flex-col">
+        <div className="w-full flex flex-col">
           {/* Tabs */}
           <div className="border-b bg-white sticky top-0 z-10">
             <div className="flex overflow-x-auto scrollbar-hide">
+              <button
+                onClick={() => setActiveTab('preview')}
+                className={`flex items-center justify-center space-x-1 px-3 sm:px-4 lg:px-6 py-2 sm:py-3 font-medium text-xs sm:text-sm border-b-2 transition-colors whitespace-nowrap flex-1 min-w-0 ${
+                  activeTab === 'preview'
+                    ? 'border-blue-500 text-blue-600 bg-blue-50'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                <FileText className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                <span className="truncate">Preview</span>
+              </button>
               <button
                 onClick={() => setActiveTab('summary')}
                 className={`flex items-center justify-center space-x-1 px-3 sm:px-4 lg:px-6 py-2 sm:py-3 font-medium text-xs sm:text-sm border-b-2 transition-colors whitespace-nowrap flex-1 min-w-0 ${
@@ -113,6 +97,46 @@ const DocumentViewer = ({ document, onBack, credits, onDeductCredits }) => {
 
           {/* Tab Content */}
           <div className="flex-1 overflow-hidden">
+            {activeTab === 'preview' && (
+              <div className="h-full bg-gray-50 p-3 sm:p-4 lg:p-6 overflow-y-auto">
+                <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 lg:p-8 h-full">
+                  <div className="text-center mb-4 sm:mb-6">
+                    <FileText className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 text-gray-400 mx-auto mb-3 sm:mb-4" />
+                    <h3 className="text-lg sm:text-xl lg:text-2xl font-medium text-gray-900 mb-2">Document Preview</h3>
+                    <p className="text-sm sm:text-base text-gray-600">Full preview of {document.title}</p>
+                  </div>
+                  
+                  {/* Mock document content */}
+                  <div className="space-y-3 sm:space-y-4 text-sm sm:text-base text-gray-700 leading-relaxed overflow-y-auto">
+                    <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">{document.title}</h2>
+                    <p>This is a full preview of the document content. In the actual implementation, this would display the real PDF or DOCX content using a document viewer library like PDF.js or React-PDF.</p>
+                    <p>The document contains {document.pages} pages of content with detailed information and analysis. Users can now view the complete document in this dedicated preview tab without it interfering with the AI tools.</p>
+                    
+                    <div className="bg-blue-50 p-4 sm:p-6 rounded-lg mt-4 sm:mt-6">
+                      <h3 className="font-semibold text-blue-900 mb-3 text-base sm:text-lg">Available AI Features:</h3>
+                      <ul className="list-disc list-inside text-blue-800 space-y-2 text-sm sm:text-base">
+                        <li>Generate AI-powered summaries of the document content</li>
+                        <li>Create interactive quizzes to test comprehension</li>
+                        <li>Chat with AI about specific sections or concepts</li>
+                        <li>Download and share the document with others</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="mt-6 sm:mt-8">
+                      <h4 className="font-semibold text-gray-900 mb-2 text-base sm:text-lg">Document Information</h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-sm">
+                        <div className="bg-gray-50 p-3 rounded">
+                          <span className="font-medium">Pages:</span> {document.pages}
+                        </div>
+                        <div className="bg-gray-50 p-3 rounded">
+                          <span className="font-medium">Size:</span> {document.size}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
             {activeTab === 'summary' && (
               <SummaryGenerator 
                 document={document} 
